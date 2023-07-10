@@ -3,6 +3,18 @@ const gulp = require("gulp");
 // Sassをコンパイルするプラグインの読み込み
 const sass = require("gulp-sass")(require("sass"));
 
+// style.scssをタスクを作成する
+gulp.task("default", () => {
+  // style.scssファイルを取得
+  return (
+    gulp
+      .src("css/style.scss")
+      // Sassのコンパイルを実行
+      .pipe(sass())
+      // cssフォルダー以下に保存
+      .pipe(gulp.dest("css"))
+  );
+});
 // style.scssの監視タスクを作成する
 gulp.task("default", () => {
   // ★ style.scssファイルを監視
@@ -25,22 +37,5 @@ gulp.task("default", () => {
         // cssフォルダー以下に保存
         .pipe(gulp.dest("css"))
     );
-  });
-});
-
-// browser-syncのプラグインの読み込み
-const browserSync = require("browser-sync");
-
-// タスクの設定
-gulp.task("browserSyncTask", function () {
-  browserSync({
-    server: {
-      baseDir: "src", // ルートとなるディレクトリを指定
-    },
-  });
-
-  // srcフォルダ以下のファイルを監視
-  gulp.watch("src/**", function () {
-    browserSync.reload(); // ファイルに変更があれば同期しているブラウザをリロード
   });
 });
